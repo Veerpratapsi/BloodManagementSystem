@@ -4,6 +4,25 @@
 	include ('include/header.php');
 
 ?>
+<style>
+	.header-img{
+	 
+	  background: url(./img/header.png) no-repeat center center fixed;
+		-webkit-background-size: cover;
+	 -moz-background-size: cover;
+	   background-size: cover;
+	   -o-background-size: cover;
+	   height: auto;
+	   min-height: 460px;
+	   padding: 10px;
+	   color: white;
+	   font-weight: 700;
+   }
+   .header-img p{
+	 font-weight: 100;
+	 font-size: 18px;
+   }
+	</style>
 
 
 <div class="container-fluid header-img">
