@@ -30,8 +30,8 @@
 					<div class="col-md-6 offset-md-3">
 
 						<div class="header">
-							<h1 class="text-center">Donate the blood, save the life</h1>
-						<p class="text-center">Donate the blood to help the others.</p>
+							<h1 class="text-center">Donate  blood, save  life</h1>
+						<p class="text-center">Donate  blood to help  others.</p>
 						</div>
 
 
