@@ -13,10 +13,10 @@ $Connection=[
 
 $conn= sqlsrv_connect($serverName,$Connection);
 
-if (!$conn) 
+/*if (!$conn) 
     die(print_r(sqlsrv_errors(), true));
  else 
-    echo "Connection successful!";
+    echo "Connection successful!";*/
 ?>
 
 
