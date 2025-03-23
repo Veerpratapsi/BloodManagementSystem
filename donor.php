@@ -1,7 +1,7 @@
 <?php	
 	
 	include ('include/header.php'); 
-
+    include ('database/connection.php'); 
 ?>
 
 <!DOCTYPE html>
@@ -1053,7 +1053,7 @@
 <?php	
 
 	include ('include/footer.php'); 
-	include ('database/connection.php'); 
+	
 
 ?>
 <?php
@@ -1172,8 +1172,8 @@ elseif ($requestMethod === 'POST' && $pathParts[0] === 'donors' && count($pathPa
     
     try {
         $stmt = $pdo->prepare(
-            'INSERT INTO donors (
-                name, blood_type, age, weight, location, 
+            'INSERT INTO tb_donors (
+               D_name, D_blood_type, D_age, weight, location, 
                 contact, email, last_donation, medical_conditions, availability, 
                 donation_count, last_updated
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, NOW())'
