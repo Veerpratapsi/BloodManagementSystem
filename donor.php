@@ -373,7 +373,7 @@ tr:hover {
 						<td><?php echo $donor['D_contact']; ?></td>
                         <td><?php echo $donor['D_email']; ?></td>
 						<td><?php echo $donor['D_address']; ?></td>
-						<td><?php echo isset($donor['D_Last_Donation']) ? $donor['D_Last_Donation'] : 'N/A'; ?></td>
+						
                     </tr>
                 <?php endforeach; ?>
             </tbody>

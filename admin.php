@@ -112,9 +112,7 @@ header {
               
                 <li><a href="donor.php">Donors</a></li>
                 <li><a href="#">Requests</a></li>
-                <li><a href="#">Inventory</a></li>
-                <li><a href="#">Reports</a></li>
-            
+              
             </ul>
         </aside>
         <main class="main-content">
