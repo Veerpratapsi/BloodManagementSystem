@@ -19,7 +19,7 @@
         <a class="nav-link" href="index.php">Home</a>
       </li>
 
-      <li class="nav-item">
+     <!-- <li class="nav-item">
         <a class="nav-link" href="donate.php">Donate</a>
       </li>
       
@@ -29,7 +29,7 @@
 
       <li class="nav-item">
         <a class="nav-link" href="Camp.php">Camp</a>
-      </li>
+      </li>-->
 
       <li class="nav-item">
         <a class="nav-link" href="signin.php">Signin</a>
