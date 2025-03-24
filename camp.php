@@ -1,7 +1,7 @@
 <?php	
 	
 	include ('include/header.php'); 
-
+   include("database/connection.php")
 ?>
 
 <style>
@@ -174,3 +174,40 @@
 
 		<input type="submit" value="Create Camp">
 		</form>
+        <?php
+// Database connection parameters
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $campName = $_POST['campName'];
+    $address = $_POST['address'];
+    $startDate = $_POST['startDate'];
+    $endDate = $_POST['endDate'];
+    $contactPerson = $_POST['contactPerson'];
+    $doctor1 = $_POST['doctor1'];
+    $doctor2 = $_POST['doctor2'];
+    $helper1 = $_POST['helper1'];
+    $helper2 = $_POST['helper2'];
+    $helper3 = $_POST['helper3'];
+    $helper4 = $_POST['helper4'];
+
+    // Prepare the SQL insert statement
+    $sql = "INSERT INTO Camps (CampName, Address, StartDate, EndDate, ContactPerson, Doctor1, Doctor2, Helper1, Helper2, Helper3, Helper4) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    // Prepare the statement
+    $stmt = sqlsrv_prepare($conn, $sql, array($campName, $address, $startDate, $endDate, $contactPerson, $doctor1, $doctor2, $helper1, $helper2, $helper3, $helper4));
+
+    // Execute the statement
+    if (sqlsrv_execute($stmt)) {
+        echo "New camp created successfully!";
+    } else {
+        echo "Error: " . print_r(sqlsrv_errors(), true);
+    }
+
+    // Free statement and close connection
+    sqlsrv_free_stmt($stmt);
+    sqlsrv_close($conn);
+}
+?>
