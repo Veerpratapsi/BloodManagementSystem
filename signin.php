@@ -2,135 +2,135 @@
 
 	//include header file
 	include ('include/header.php');
+include("database/connection.php")
+	?>
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Signup</title>
+    <style>body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
 
-	if (isset($_POST['SignIn'])) {
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
 
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-		//Email Input check
-		if(isset($_POST['email']) && !empty($_POST['email'])){
+h2 {
+    margin-bottom: 20px;
+}
 
-			$email = $_POST['email'];
-		  }else{
-			$emailError = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-			<strong>Please fill the Email field.</strong>
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>';
-		  }
+.form-group {
+    margin-bottom: 15px;
+}
 
+label {
+    display: block;
+    margin-bottom: 5px;
+}
 
-		  //Password Input check
-		  if(isset($_POST['password']) && !empty($_POST['password'])){
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 
-			$password = $_POST['password'];
+button {
+    width: 100%;
+    padding: 10px;
+    background-color:darkred;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
-			$password = md5($password);
-		  }else{
-			$passwordError = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-			<strong>Please fill the Password field.</strong>
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>';
-		  }
+button:hover {
+    background-color:darkred;
+}
 
-		  //Login Query
+#message {
+    margin-top: 20px;
+    color: red;
+}</style>
+</head>
+<body>
+    <div class="container">
+        <h2>Admin Signup</h2>
+        <form id="signupForm" action="signup.php" method="POST">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+        <div id="message"></div>
+    </div>
+    <script >document.getElementById('signupForm').addEventListener('submit', function(event) {
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+    const messageDiv = document.getElementById('message');
 
-		  if (isset($email) && isset($password)) {
-			  
-			$sql = "SELECT * FROM donor WHERE password='$password' AND email='$email' ";
+    if (password !== confirmPassword) {
+        event.preventDefault(); // Prevent form submission
+        messageDiv.textContent = "Passwords do not match!";
+    } else {
+        messageDiv.textContent = ""; // Clear any previous messages
+    }
+});</script>
+</body>
+</html>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
 
+    // Basic validation
+    if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
+        echo "All fields are required.";
+        exit;
+    }
 
-			$result = mysqli_query($connection,$sql);
+    if ($password !== $confirm_password) {
+        echo "Passwords do not match.";
+        exit;
+    }
 
-			if (mysqli_num_rows($result)>0) {
+    // Here you would typically hash the password and save the user to a database
+    // For demonstration, we'll just echo the values
+    // In a real application, you would save the user data to a database here
 
-				while ($row = mysqli_fetch_assoc($result)) {
-					$_SESSION['user_id']=$row['id'];
-					$_SESSION['name']=$row['name'];
-					$_SESSION['save_life_date']=$row['save_life_date'];
-
-					header('Location: user/index.php');
-				}
-				
-			}else{
-				$submitError = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-				<strong>Sorry! No Record Found. Please enter valid email or password.</strong>
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-				</button>
-			  </div>';
-
-			}
-		  }
-	}
-
+    // Redirect to the admin dashboard after successful signup
+    header("Location: admin.php");
+    exit();
+}
 ?>
 
-<style>
-	.size{
-		min-height: 0px;
-		padding: 60px 0 60px 0;
-
-	}
-	h1{
-		color: white;
-	}
-	.form-group{
-		text-align: left;
-	}
-	h3{
-		color: #e74c3c;
-		text-align: center;
-	}
-	.red-bar{
-		width: 25%;
-	}
-	.form-container{
-		background-color: white;
-		border: .5px solid #eee;
-		border-radius: 5px;
-		padding: 20px 10px 20px 30px;
-		-webkit-box-shadow: 0px 2px 5px -2px rgba(89,89,89,0.95);
--moz-box-shadow: 0px 2px 5px -2px rgba(89,89,89,0.95);
-box-shadow: 0px 2px 5px -2px rgba(89,89,89,0.95);
-	}
-</style>
- <div class="container-fluid red-background size">
-	<div class="row">
-		<div class="col-md-6 offset-md-3">
-			<h1 class="text-center">SignIn</h1>
-			<hr class="white-bar">
-		</div>
-	</div>
-</div>
-<div class="conatiner size ">
-	<div class="row">
-		<div class="col-md-6 offset-md-3 form-container">
-		<h3>SignIn</h3>
-		<hr class="red-bar">
-
-		<?php if (isset($submitError)) echo $submitError ;?>
-
-		<!-- Erorr Messages -->
-
-			<form action="" method="post" >
-				<div class="form-group">
-					<label for="email">Email</label>
-					<input type="text" name="email" class="form-control" placeholder="Email">
-					<?php if (isset($emailError)) echo $emailError;?>
-				</div>
-				<div class="form-group">
-					<label for="password">Password</label>
-					<input type="password" name="password" placeholder="Password"class="form-control">
-					<?php if (isset($passwordError)) echo $passwordError ;?>
-				</div>
-				<div class="form-group">
-					<button class="btn btn-danger btn-lg center-aligned" type="submit" name="SignIn">SignIn</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-<?php include 'include/footer.php' ?>
+<?php include 'include/footer.php' 
+?>
