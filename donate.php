@@ -390,7 +390,7 @@ box-shadow: 0px 2px 5px -2px rgba(89,89,89,0.95);
 
     <div class="form-group">
         <label for="last_donation_date">Last Donation Date</label>
-        <input type="date" name="D_Last_donation" id="last_donation_date" class="form-control" required value="<?php if (isset($D_Last_Donation)) echo $D_Last_Donation; ?>">
+        <input type="date" name="D_Last_Donation" id="last_donation_date" class="form-control" required value="<?php if (isset($D_Last_Donation)) echo $D_Last_Donation; ?>">
         <?php if (isset($D_Last_DonationError)) echo $D_Last_DonationError; ?>
     </div><!--End form-group-->
 

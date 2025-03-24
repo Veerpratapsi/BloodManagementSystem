@@ -1,6 +1,6 @@
 <?php 
-include('include/header.php')
-
+include('include/header.php');
+include('database/connection.php');
 
 ?>
 <!DOCTYPE html>
@@ -23,7 +23,7 @@ include('include/header.php')
             line-height: 1.6;
             padding: 20px;
             margin-top: 5%;
-           
+           align:center;
         }
         
         .container {
@@ -185,7 +185,7 @@ include('include/header.php')
                     <label for="total-blood-quantity" class="required">Total Quantity of Blood Required</label>
                     <div class="form-row">
                         <div class="form-col">
-                            <input type="number" id="total-blood-quantity" min="1" placeholder="Enter total number of units" required>
+                            <input type="number" name="Blood-qnt" id="total-blood-quantity" min="1" placeholder="Enter total number of units" required>
                         </div>
                        
                     </div>
@@ -251,7 +251,7 @@ include('include/header.php')
             
             <div class="form-group">
                 <label for="date-needed" class="required">Date Needed</label>
-                <input type="date" id="date-needed" required>
+                <input type="date" name="Date" id="date-needed" required>
             </div>
             
            
@@ -262,55 +262,149 @@ include('include/header.php')
 </body>
 </html>
 <?php
-$serverName = "VEERPRATAP\SQLEXPRESS";
-$database="Blood_Management_System";
-$uid="";
-$pass="";
-
-$Connection=[
-    "Database" => $database,
-    "UID" =>$uid,
-    "PWD" =>$pass
-];
-
-$conn= sqlsrv_connect($serverName,$Connection);
-
-if (!$conn) 
-    die(print_r(sqlsrv_errors(), true));
+// Database connection settings
 
 
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get form data
- 
-    $H_id = $_POST['hospital-id'];
-	$Requested_qnt=$_POST['total-blood-quantity'];
-	$H_R_BloodGrp=$_POST['blood_types'];
-    $Fulfilled_Date=$_POST['date-needed'];
+// Fetch donors
+$sql = "SELECT * FROM tb_H_Request";
+$stmt = sqlsrv_query($conn, $sql);
 
+if ($stmt === false) {
+    die(print_r(sqlsrv_errors(), true)); // Print the error details
+}
 
-    // Prepare the SQL statement
-    $sql = "INSERT INTO tb_donor (H_id, Requested_qnt,H_R_BloodGrp,Fulfilled_Date) 
-            VALUES (?, ?, ?, ?)";
-    
-    $params = array($H_id, $Requested_qnt,$H_R_BloodGrp,$Fulfilled_Date);
-
-    // Execute the statement
-    $stmt = sqlsrv_query($conn, $sql, $params);
-
-    if ($stmt === false) {
-        echo "Error in executing query.<br />";
-        die(print_r(sqlsrv_errors(), true));
-    } else {
-        echo "New record created successfully";
-    }
-
-    // Free statement and connection resources
-    sqlsrv_free_stmt($stmt);
+$Requests = array();
+while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+    $Requests[] = $row;
 }
 
 // Close the connection
+sqlsrv_free_stmt($stmt);
 sqlsrv_close($conn);
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request</title>
+    <Style>
+		/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 100rem;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+table {
+    width: 1200px;
+    border-collapse: collapse;
+    margin-top: 20px;
+	align-items: flex-end;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+		</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Requestst</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Request_ID</th>
+                    <th>Hospital Id</th>
+                    <th>Blood Quantity</th>
+					<th>Fulfilled DAte</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($Requests as $Request): ?>
+                    <tr>
+                        <td><?php echo $Request['H_R_id']; ?></td>
+                        <td><?php echo $Request ['H_id']; ?></td>
+						<td><?php echo $Request['Requested_qnt']; ?></td>
+						<td><?php echo $Request['H_R_BloodGrp']; ?></td>
+						<td><?php echo $Request['Fulfilled_Date']; ?></td>
+						
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+<?php
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $H_id = $_POST['hospital'];
+    $Requested_qnt = $_POST['Blood-qnt'];
+    $Fulfilled_Date= $_POST['Date'];
+
+    // Prepare the SQL insert statement
+    $sql = "INSERT INTO tb_H_Request (H_id, Requested_qnt, Fulfilled_Date) VALUES (?, ?, ?)";
+    $params = array($H_id, $Requested_qnt, $Fulfilled_Date);
+
+    // Execute the query
+    $stmt = sqlsrv_query($conn, $sql, $params);
+
+    if ($stmt === false) {
+        die(print_r(sqlsrv_errors(), true));
+    }
+
+    // Insert blood types and their quantities
+    $H_R_BloodGrp = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+    foreach ($H_R_BloodGrp as $bloodType) {
+        if (isset($_POST['blood_types']) && in_array($bloodType, $_POST['blood_types'])) {
+            $units = $_POST[$bloodType . '_units']; // Assuming you name the input fields as 'A+_units', etc.
+            if ($units > 0) {
+                $sql = "INSERT INTO tb_H_Request (H_id, H_R_Bloodgrp,) VALUES (?, ?)";
+                $params = array($H_id, $H_R_BloodGrp,);
+                $stmt = sqlsrv_query($conn, $sql, $params);
+                if ($stmt === false) {
+                    die(print_r(sqlsrv_errors(), true));
+                }
+            }
+        }
+    }
+
+    // Close the statement and connection
+    sqlsrv_free_stmt($stmt);
+    sqlsrv_close($conn);
+
+    echo "Request submitted successfully!";
+}
 ?>
 
 <?php
