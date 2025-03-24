@@ -264,7 +264,7 @@
 
 
   }
-?>
+?>*/
 
 <style>
 	.size{
@@ -360,7 +360,7 @@ box-shadow: 0px 2px 5px -2px rgba(89,89,89,0.95);
 
     <div class="form-group">
         <label for="id_proof">ID Proof</label>
-        <input type="file" name="D_identification" id="id_proof" class="form-control" required>
+        <input type="text" name="D_identification" id="id_proof" class="form-control" required>
         <?php if (isset($D_identificationError)) echo $D_identificationError; ?>
     </div><!--End form-group-->
 

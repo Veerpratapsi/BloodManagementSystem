@@ -109,12 +109,12 @@ header {
         <aside class="sidebar">
             <h2>Blood Management System</h2>
             <ul>
-                <li><a href="#" class="active">Dashboard</a></li>
-                <li><a href="#">Donors</a></li>
+              
+                <li><a href="donor.php">Donors</a></li>
                 <li><a href="#">Requests</a></li>
                 <li><a href="#">Inventory</a></li>
                 <li><a href="#">Reports</a></li>
-                <li><a href="#">Settings</a></li>
+            
             </ul>
         </aside>
         <main class="main-content">
