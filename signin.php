@@ -69,7 +69,7 @@ button:hover {
 <body>
     <div class="container">
         <h2>Admin Signup</h2>
-        <form id="signupForm" action="signup.php" method="POST">
+        <form id="signupForm" action="admin.php" method="POST">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
