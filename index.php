@@ -35,7 +35,7 @@
 						</div>
 
 
-						<h1 class="text-center">Search The Donors</h1>
+						
 						<hr class="white-bar text-center">
 
 						<form action="search.php" method="get" class="form-inline text-center" style="padding: 40px 0px 0px 5px;">
@@ -58,9 +58,7 @@
 
 								</select>
 							</div>-->
-							<div class="form-group center-aligned">
-								<button type="submit" class="btn btn-lg btn-danger">Search</button>
-							</div>
+							
 						</form>
 					</div>
 				</div>
@@ -121,8 +119,3 @@
 
 			<!-- end aboutus section -->
 
-
-<?php
-//include footer file
-include ('include/footer.php');
- ?>

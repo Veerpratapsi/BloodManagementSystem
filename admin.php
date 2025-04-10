@@ -1,3 +1,37 @@
+<?php
+// Database connection parameters
+include('database/connection.php');
+
+// Queries to fetch data
+$totalDonorsQuery = "SELECT COUNT(*) AS TotalDonors FROM tb_Donor";
+$totalRequestsQuery = "SELECT COUNT(*) AS TotalRequests FROM tb_h_Request";
+$availableBloodQuery = "SELECT SUM(Quantity) AS AvailableBlood FROM BloodInventory";
+$pendingRequestsQuery = "SELECT COUNT(*) AS PendingRequests FROM tb_h_Requests WHERE Status = 'Pending'";
+
+// Execute queries and fetch results
+$totalDonorsResult = sqlsrv_query($conn, $totalDonorsQuery);
+$totalRequestsResult = sqlsrv_query($conn, $totalRequestsQuery);
+$availableBloodResult = sqlsrv_query($conn, $availableBloodQuery);
+$pendingRequestsResult = sqlsrv_query($conn, $pendingRequestsQuery);
+
+// Fetching data
+$totalDonors = sqlsrv_fetch_array($totalDonorsResult, SQLSRV_FETCH_ASSOC)['TotalDonors'];
+$totalRequests = sqlsrv_fetch_array($totalRequestsResult, SQLSRV_FETCH_ASSOC)['TotalRequests'];
+/*$availableBlood = sqlsrv_fetch_array($availableBloodResult, SQLSRV_FETCH_ASSOC)['AvailableBlood'];
+$pendingRequests = sqlsrv_fetch_array($pendingRequestsResult, SQLSRV_FETCH_ASSOC)['PendingRequests'];*/
+
+// Close the connection
+sqlsrv_close($conn);
+?>
+
+<!-- Displaying the results in the HTML -->
+<script>
+    document.getElementById('total-donors').innerText = "<?php echo $totalDonors; ?>";
+    document.getElementById('total-requests').innerText = "<?php echo $totalRequests; ?>";
+   /* document.getElementById('available-blood').innerText = "<?php echo $availableBlood; ?>";
+    document.getElementById('pending-requests').innerText = "<?php echo $pendingRequests; ?>";/*
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -110,9 +144,15 @@ header {
             <h2>Blood Management System</h2>
             <ul>
               
-                <li><a href="donor.php">Donors</a></li>
-                <li><a href="#">Requests</a></li>
-              
+                <li><a href="admin.php">Dashboard</a></li>
+                <li><a href="register_donor.php">Register Donors</a></li>
+                <li><a href="hospital_registration.php">Register Hospital</a></li>
+                <li><a href="show_requests.php">Requests</a></li>
+                <li><a href="Donor.php">Donor Details</a></li>
+                <li><a href="Show_Hospital.php">Hospitals</a></li>
+                
+
+               
             </ul>
         </aside>
         <main class="main-content">
@@ -126,28 +166,30 @@ header {
             <section class="stats">
                 <div class="stat-card">
                     <h3>Total Donors</h3>
-                    <p id="total-donors">150</p>
+                    <p id="total-donors"><?php echo $totalDonors; ?></p>
                 </div>
                 <div class="stat-card">
                     <h3>Total Requests</h3>
-                    <p id="total-requests">30</p>
+                    <p id="total-requests"><?php echo $totalRequests; ?></p>
                 </div>
+                <!--
                 <div class="stat-card">
                     <h3>Available Blood Units</h3>
-                    <p id="available-blood">120</p>
+                    <p id="available-blood"><?php echo $availableBlood; ?></p>
                 </div>
                 <div class="stat-card">
                     <h3>Pending Requests</h3>
-                    <p id="pending-requests">5</p>
-                </div>
+                    <p id="pending-requests"><?php echo $pendingRequests; ?></p>
+                </div>-->
             </section>
         </main>
     </div>
-    <script >
-        document.getElementById('logout').addEventListener('click', function() {
-    alert('You have logged out.');
-    // Here you can add functionality to redirect to a login page or perform logout actions
-});
-    </script>
+    
 </body>
+<script>
+    document.getElementById('logout').addEventListener('click', function() {
+        // Redirect to the logout script
+        window.location.href = 'index.php';
+    });
+</script>
 </html>

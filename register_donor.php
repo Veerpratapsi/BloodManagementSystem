@@ -264,7 +264,7 @@
 
 
   }
-?>*/
+?>
 
 <style>
 	.size{
@@ -295,7 +295,9 @@ box-shadow: 0px 2px 5px -2px rgba(89,89,89,0.95);
 		width: 25%;
 	}
 </style>
+
 <div class="container-fluid red-background size">
+	
 	<div class="row">
 		<div class="col-md-6 offset-md-3">
 			<h1 class="text-center">Donate</h1>
@@ -389,8 +391,8 @@ box-shadow: 0px 2px 5px -2px rgba(89,89,89,0.95);
     </div><!--End form-group-->
 
     <div class="form-group">
-        <label for="last_donation_date">Last Donation Date</label>
-        <input type="date" name="D_Last_Donation" id="last_donation_date" class="form-control" required value="<?php if (isset($D_Last_Donation)) echo $D_Last_Donation; ?>">
+        <label for="last_donation_month">Last Donation </label>
+        <input type="text" name="D_Last_Donation" id="last_donation_month" class="form-control" required value="<?php if (isset($D_Last_Donation)) echo $D_Last_Donation; ?>">
         <?php if (isset($D_Last_DonationError)) echo $D_Last_DonationError; ?>
     </div><!--End form-group-->
 

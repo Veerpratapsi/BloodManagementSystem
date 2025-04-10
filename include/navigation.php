@@ -25,14 +25,14 @@
       
       <li class="nav-item">
         <a class="nav-link" href="donor.php">Donors</a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="Camp.php">Camp</a>
       </li>-->
 
       <li class="nav-item">
-        <a class="nav-link" href="signin.php">Signin</a>
+        <a class="nav-link" href="request.php">Request Blood</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="login.php">Signin</a>
       </li>
       
       <li class="nav-item">
