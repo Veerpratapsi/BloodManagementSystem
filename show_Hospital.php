@@ -11,6 +11,15 @@ $stmt = sqlsrv_query($conn, $sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hospital Dashboard</title>
     <style>
+  .container {
+            width: 80%;
+            margin: 50px auto;
+            padding: 20px;
+            background: #3c3c3c; /* Slightly lighter background for the container */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            color:white;
+        }
 table {
     width: 100%;
     border-collapse: collapse;
@@ -18,36 +27,43 @@ table {
 }
 
 th, td {
-    border: 1px solid #ccc;
-    padding: 10px;
+    border: 1px solid #ddd;
+    padding: 8px;
     text-align: left;
 }
 
 th {
-    background-color: #8B0000; /* Dark red */
-    color: #fff; /* White text */
+    background-color: #b22222; /* Dark red background for table headers */
+    color: #ffffff; /* White text for headers */
 }
 
 tr:nth-child(even) {
-    background-color: #f5f5dc; /* Cream background for even rows */
+    background-color: #4c4c4c; /* Darker background for even rows */
 }
 
-tr:nth-child(odd) {
-    background-color: #fff; /* White background for odd rows */
+tr:hover {
+    background-color: #5c5c5c; /* Slightly lighter on hover */
+}
+.button {
+    background-color: #8B0000; /* Dark red color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 25px; /* Curved corners */
+    padding: 10px 20px; /* Padding for size */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.button:hover {
+    background-color: #A52A2A; /* Lighter red on hover */
 }
     </style>
-</head>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital Registration Dashboard</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <title>Registered Hospitals</title>
 </head>
 <body>
     <div class="container">
-        <h1>Hospital Registration Dashboard</h1>
+        <h1>Registered Hospitals</h1>
         <table>
             <thead>
                 <tr>
@@ -84,15 +100,15 @@ tr:nth-child(odd) {
                 <td>" . htmlspecialchars($row['H_address']) . "</td>
                 <td>" . htmlspecialchars($row['H_con_person']) . "</td>
                 <td>
-                    <form action='update_hospital.php' method='post' style='display:inline;'>
+                    <form action='update_hospital.php' method='post' style='display:inline;' >
                         <input type='hidden' name='H_id' value='" . htmlspecialchars($row['H_id']) . "'>
-                        <input type='submit' value='Update'>
+                        <input type='submit' value='Update' class='button'>
                     </form>
                 </td>
                 <td>
                     <form action='delete_hospital.php' method='post' style='display:inline;'>
                         <input type='hidden' name='H_id' value='" . htmlspecialchars($row['H_id']) . "'>
-                        <input type='submit' value='Delete' onclick='return confirm(\"Are you sure you want to delete this hospital?\");'>
+                        <input type='submit' value='Delete' onclick='return confirm(\"Are you sure you want to delete this hospital?\");' class='button'>
                     </form>
                 </td>
               </tr>";

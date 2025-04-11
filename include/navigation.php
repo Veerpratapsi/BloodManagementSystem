@@ -31,12 +31,14 @@
         <a class="nav-link" href="request.php">Request Blood</a>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link" href="login.php">Signin</a>
-      </li>
+    
       
       <li class="nav-item">
         <a class="nav-link" href="about.php">About Us</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="login.php">Login</a>
       </li>
 
     </ul>

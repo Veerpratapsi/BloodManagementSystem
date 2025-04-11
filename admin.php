@@ -3,33 +3,48 @@
 include('database/connection.php');
 
 // Queries to fetch data
+// Fetch total donors
 $totalDonorsQuery = "SELECT COUNT(*) AS TotalDonors FROM tb_Donor";
-$totalRequestsQuery = "SELECT COUNT(*) AS TotalRequests FROM tb_h_Request";
-$availableBloodQuery = "SELECT SUM(Quantity) AS AvailableBlood FROM BloodInventory";
-$pendingRequestsQuery = "SELECT COUNT(*) AS PendingRequests FROM tb_h_Requests WHERE Status = 'Pending'";
-
-// Execute queries and fetch results
 $totalDonorsResult = sqlsrv_query($conn, $totalDonorsQuery);
-$totalRequestsResult = sqlsrv_query($conn, $totalRequestsQuery);
-$availableBloodResult = sqlsrv_query($conn, $availableBloodQuery);
-$pendingRequestsResult = sqlsrv_query($conn, $pendingRequestsQuery);
-
-// Fetching data
+if ($totalDonorsResult === false) {
+    die(print_r(sqlsrv_errors(), true)); // Print error if query fails
+}
 $totalDonors = sqlsrv_fetch_array($totalDonorsResult, SQLSRV_FETCH_ASSOC)['TotalDonors'];
-$totalRequests = sqlsrv_fetch_array($totalRequestsResult, SQLSRV_FETCH_ASSOC)['TotalRequests'];
-/*$availableBlood = sqlsrv_fetch_array($availableBloodResult, SQLSRV_FETCH_ASSOC)['AvailableBlood'];
-$pendingRequests = sqlsrv_fetch_array($pendingRequestsResult, SQLSRV_FETCH_ASSOC)['PendingRequests'];*/
 
-// Close the connection
-sqlsrv_close($conn);
+// Fetch total requests
+$totalRequestsQuery = "SELECT COUNT(*) AS TotalRequests FROM tb_h_request";
+$totalRequestsResult = sqlsrv_query($conn, $totalRequestsQuery);
+if ($totalRequestsResult === false) {
+    die(print_r(sqlsrv_errors(), true)); // Print error if query fails
+}
+$totalRequests = sqlsrv_fetch_array($totalRequestsResult, SQLSRV_FETCH_ASSOC)['TotalRequests'];
+
+// Fetch available blood units
+$availableBloodQuery = "SELECT SUM(Quantity) AS AvailableBlood FROM BloodInventory";
+$availableBloodResult = sqlsrv_query($conn, $availableBloodQuery);
+if ($availableBloodResult === false) {
+    die(print_r(sqlsrv_errors(), true)); // Print error if query fails
+}
+$availableBlood = sqlsrv_fetch_array($availableBloodResult, SQLSRV_FETCH_ASSOC)['AvailableBlood'];
+
+// Fetch pending requests
+$pendingRequestsQuery = "SELECT COUNT(*) AS PendingRequests FROM tb_h_Request WHERE Status = 'Pending'";
+$pendingRequestsResult = sqlsrv_query($conn, $pendingRequestsQuery);
+if ($pendingRequestsResult === false) {
+    die(print_r(sqlsrv_errors(), true)); // Print error if query fails
+}
+$pendingRequests = sqlsrv_fetch_array($pendingRequestsResult, SQLSRV_FETCH_ASSOC)['PendingRequests'];
+
+
+
 ?>
 
 <!-- Displaying the results in the HTML -->
 <script>
     document.getElementById('total-donors').innerText = "<?php echo $totalDonors; ?>";
     document.getElementById('total-requests').innerText = "<?php echo $totalRequests; ?>";
-   /* document.getElementById('available-blood').innerText = "<?php echo $availableBlood; ?>";
-    document.getElementById('pending-requests').innerText = "<?php echo $pendingRequests; ?>";/*
+    document.getElementById('available-blood').innerText = "<?php echo $availableBlood; ?>";
+    document.getElementById('pending-requests').innerText = "<?php echo $pendingRequests; ?>";
 </script>
 
 <!DOCTYPE html>
@@ -150,9 +165,8 @@ header {
                 <li><a href="show_requests.php">Requests</a></li>
                 <li><a href="Donor.php">Donor Details</a></li>
                 <li><a href="Show_Hospital.php">Hospitals</a></li>
-                
-
-               
+                <li><a href="inventory.php">Inventory Insert</a></li>
+                <li><a href="show_inventory.php">Inventory</a></li>
             </ul>
         </aside>
         <main class="main-content">
@@ -172,7 +186,7 @@ header {
                     <h3>Total Requests</h3>
                     <p id="total-requests"><?php echo $totalRequests; ?></p>
                 </div>
-                <!--
+           
                 <div class="stat-card">
                     <h3>Available Blood Units</h3>
                     <p id="available-blood"><?php echo $availableBlood; ?></p>
@@ -180,7 +194,7 @@ header {
                 <div class="stat-card">
                     <h3>Pending Requests</h3>
                     <p id="pending-requests"><?php echo $pendingRequests; ?></p>
-                </div>-->
+                </div>
             </section>
         </main>
     </div>

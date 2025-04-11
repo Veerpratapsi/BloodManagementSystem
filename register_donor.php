@@ -294,10 +294,63 @@ box-shadow: 0px 2px 5px -2px rgba(89,89,89,0.95);
 	.red-bar{
 		width: 25%;
 	}
+
+	.sidebar {
+    width: 250px;
+    height: 775px;
+    background-color:darkred;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    border-radius: 5px;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+    background-color: darkred;
+}
+.parent{
+            display: flex;
+            align-items: center;
+        }
+
 </style>
 
 <div class="container-fluid red-background size">
-	
+<div class="parent">
+        <aside class="sidebar">
+            <h2>Blood Management System</h2>
+            <ul>
+                <li><a href="admin.php">Dashboard</a></li>
+                <li><a href="register_donor.php">Register Donors</a></li>
+                <li><a href="hospital_registration.php">Register Hospital</a></li>
+                <li><a href="show_requests.php">Requests</a></li>
+                <li><a href="Donor.php">Donor Details</a></li>
+                <li><a href="Show_Hospital.php">Hospitals</a></li>
+				<li><a href="inventory.php">Inventory</a></li>
+               
+            </ul>
+        </aside>
+	</div>
 	<div class="row">
 		<div class="col-md-6 offset-md-3">
 			<h1 class="text-center">Donate</h1>
@@ -305,6 +358,7 @@ box-shadow: 0px 2px 5px -2px rgba(89,89,89,0.95);
 		</div>
 	</div>
 </div>
+
 <div class="container size">
 	<div class="row">
 		<div class="col-md-6 offset-md-3 form-container">

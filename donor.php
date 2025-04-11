@@ -100,13 +100,30 @@ sqlsrv_free_stmt($stmt);
         }
 
         th {
-            background-color: #f2f2f2;
-            padding: 1rem;
-        }
+    background-color: darkred;
+    color: white;
+    padding: 1rem;
+}
+
 
         tr:hover {
             background-color: #f1f1f1;
         }
+
+        .button {
+    background-color: #8B0000; /* Dark red color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 25px; /* Curved corners */
+    padding: 10px 20px; /* Padding for size */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.button:hover {
+    background-color: #A52A2A; /* Lighter red on hover */
+}
     </style>
 </head>
 <body>
@@ -120,6 +137,7 @@ sqlsrv_free_stmt($stmt);
                 <li><a href="show_requests.php">Requests</a></li>
                 <li><a href="Donor.php">Donor Details</a></li>
                 <li><a href="Show_Hospital.php">Hospitals</a></li>
+                <li><a href="inventory.php">Inventory</a></li>
             </ul>
         </aside>
 
@@ -160,13 +178,13 @@ sqlsrv_free_stmt($stmt);
                             <td>
     <form action='update_Donor.php' method='post' style='display:inline;'>
         <input type='hidden' name='D_id' value='<?= htmlspecialchars($donor['D_id']); ?>'>
-        <input type='submit' value='Update'>
+        <input type='submit' value='Update' class='button'>
     </form>
 </td>
 <td>
     <form action='delete_Donor.php' method='post' style='display:inline;'>
         <input type='hidden' name='D_id' value='<?= htmlspecialchars($donor['D_id']); ?>'>
-        <input type='submit' value='Delete' onclick='return confirm("Are you sure you want to delete this donor?");'>
+        <input type='submit' value='Delete' onclick='return confirm("Are you sure you want to delete this donor?");'class='button'>
     </form>
 </td>
                         </tr>

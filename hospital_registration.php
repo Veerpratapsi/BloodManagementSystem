@@ -131,6 +131,7 @@ button[type="reset"]:hover {
                 <li><a href="show_requests.php">Requests</a></li>
                 <li><a href="Donor.php">Donor Details</a></li>
                 <li><a href="Show_Hospital.php">Hospitals</a></li>
+                <li><a href="inventory.php">Inventory</a></li>
                
             </ul>
         </aside>
