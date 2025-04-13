@@ -1,22 +1,21 @@
 <?php
-// update_Donor.php
-
+//
 // Include database connection
 include ('database/connection.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $D_id = $_POST['D_id'];
+    $BloodID = $_POST['BloodID'];
 
     // Fetch current donor data
-    $sql = "SELECT D_id,D_name, D_bloodtype,D_age,D_gender,D_identification,D_medical,D_contact,D_email,D_address,D_Last_Donation FROM tb_Donor WHERE D_id = ?";
-    $params = array($D_id);
+    $sql = "SELECT  BloodID,BloodType, Quantity, EntryDate FROM BloodInventory WHERE BloodID = ?";
+    $params = array($BloodID);
     $stmt = sqlsrv_query($conn, $sql, $params);
-    $donor = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+    $Blood = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
     
 
     // Check if donor exists
-    if (!$donor) {
-        echo "Donor not found.";
+    if (!$Blood) {
+        echo "Collection not found.";
         exit;
     }
 
@@ -27,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Donor</title>
+    <title>Update Inventory</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
     <style>
        body {
@@ -93,23 +92,29 @@ form {
         }    </style>
 </head>
 <body>
-    <h1>Update Donor Information</h1>
-    <form action="update_donor_process.php" method="post">
-        <input type="hidden" name="D_id" value="<?= htmlspecialchars($donor['D_id']); ?>">
-        Name: <input type="text" name="D_name" value="<?= htmlspecialchars($donor['D_name']); ?>"><br>
-        Blood Type: <input type="text" name="D_bloodtype" value="<?= htmlspecialchars($donor['D_bloodtype']); ?>"><br>
-        Age: <input type="number" name="D_age" value="<?= htmlspecialchars($donor['D_age']); ?>"><br><br>
-        Gender: <input type="text" name="D_gender" value="<?= htmlspecialchars($donor['D_gender']); ?>"><br>
-        Identification: <input type="text" name="D_identification" value="<?= htmlspecialchars($donor['D_identification']); ?>"><br>
-        Medical History: <input type="text" name="D_medical" value="<?= htmlspecialchars($donor['D_medical']); ?>"><br>
-        Contact: <input type="text" name="D_contact" value="<?= htmlspecialchars($donor['D_contact']); ?>"><br>
-        Email: <input type="email" name="D_email" value="<?= htmlspecialchars($donor['D_email']); ?>"><br>
-        Address: <input type="text" name="D_address" value="<?= htmlspecialchars($donor['D_address']); ?>"><br>
-        Last Donation: <input type="text" name="D_Last_Donation" value="<?= htmlspecialchars($donor['D_Last_Donation']); ?>"><br>
-        <input type="submit" value="Update Donor">
-    </form>
+<div class="container">
+        <h1>Update Blood Inventory</h1>
+        <form action="update_inventory_process.php" method="POST">
+            <input type="hidden" name="bloodId" value="<?php echo htmlspecialchars($Blood['BloodID']); ?>">
+            <div class="form-group">
+                <label for="bloodType">Blood Type:</label>
+                <input type="text" id="bloodType" name="bloodType" value="<?php echo htmlspecialchars($Blood['BloodType']); ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" value="<?php echo htmlspecialchars($Blood['Quantity']); ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="entryDate">Entry Date:</label>
+                <input type="date" id="entryDate" name="entryDate" value="<?php echo htmlspecialchars($Blood['EntryDate']->format('Y-m-d')); ?>" required>
+            </div>
+           <br>
+           <input type="submit" value="Update Inventory">
+        </form>
+    </div>
+
 </body>
 </html>
-    <?php
+<?php
 }
 ?>

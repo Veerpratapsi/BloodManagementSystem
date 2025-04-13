@@ -28,10 +28,10 @@ if ($stmt === false) {
             width: 80%;
             margin: 50px auto;
             padding: 20px;
-            background: #3c3c3c; /* Slightly lighter background for the container */
+       
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            color:white;
+         
+            color:black;
         }
 
         h1 {
@@ -56,14 +56,14 @@ th {
     color: #ffffff; /* White text for headers */
 }
 
-tr:nth-child(even) {
-    background-color: #4c4c4c; /* Darker background for even rows */
-}
+
 
 tr:hover {
     background-color: #5c5c5c; /* Slightly lighter on hover */
 }
  
+ 
+   
    
 
 .sidebar {
@@ -133,7 +133,7 @@ tr:hover {
                 <li><a href="Donor.php">Donor Details</a></li>
                 <li><a href="Show_Hospital.php">Hospitals</a></li>
                 <li><a href="inventory.php">Inventory Insert</a></li>
-                <li><a href="fetch_inventory.php">Inventory</a></li>
+                <li><a href="show_inventory.php">Inventory</a></li>
             </ul>
         </aside>
         <div class="container">
@@ -146,6 +146,7 @@ tr:hover {
                         <th>Blood  Quantity</th>
                         <th>Entry Date</th>
                         <th>Status</th>
+                        <th>Update</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -167,6 +168,13 @@ tr:hover {
 
         // Display the status
         echo "<td>" . htmlspecialchars($row['status']) . "</td>"; // Status
+
+        echo" <td>
+        <form action='update_inventory.php' method='post' style='display:inline;'>
+            <input type='hidden' name='BloodID' value='" . htmlspecialchars($row['BloodID']) . "'>
+          <input type='submit' value='Update' class='button'>
+        </form>
+    </td>";
 
        echo" <td>
         <form action='delete_inventory.php' method='post' style='display:inline;'>

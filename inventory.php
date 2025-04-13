@@ -7,8 +7,8 @@
     <style>
 body {
     font-family: Arial, sans-serif;
-    background-color: #2c2c2c; /* Dark background */
-    color: #ffffff; /* White text for contrast */
+    background-color:white; /* Dark background */
+    color:black; /* White text for contrast */
     margin: 0;
     padding: 20px;
 }
@@ -16,7 +16,7 @@ body {
 .container {
     max-width: 800px;
     margin: auto;
-    background: #3c3c3c; /* Slightly lighter background for the container */
+
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -38,7 +38,7 @@ form {
 label {
     display: block;
     margin: 10px 0 5px;
-    color: #ffffff; /* White text for labels */
+    color:black; /* White text for labels */
 }
 
 select{
@@ -47,8 +47,8 @@ select{
     margin-bottom: 10px;
     border: 1px solid #b22222; /* Dark red border */
     border-radius: 4px;
-    background-color: #4c4c4c; /* Darker input background */
-    color: #ffffff; /* White text in inputs */
+    background-color:white; /* Darker input background */
+    color: black; /* White text in inputs */
 }
 
 input[type="text"],
@@ -59,8 +59,8 @@ input[type="date"] {
     margin-bottom: 10px;
     border: 1px solid #b22222; /* Dark red border */
     border-radius: 4px;
-    background-color: #4c4c4c; /* Darker input background */
-    color: #ffffff; /* White text in inputs */
+    background-color:#ffffff; /* Darker input background */
+    color:black; /* White text in inputs */
 }
 
 button {
@@ -77,30 +77,7 @@ button:hover {
     background-color: #a52a2a; /* Slightly lighter red on hover */
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-th {
-    background-color: #b22222; /* Dark red background for table headers */
-    color: #ffffff; /* White text for headers */
-}
-
-tr:nth-child(even) {
-    background-color: #4c4c4c; /* Darker background for even rows */
-}
-
-tr:hover {
-    background-color: #5c5c5c; /* Slightly lighter on hover */
-}
 
 .sidebar {
     width: 250px;
@@ -153,7 +130,8 @@ tr:hover {
                 <li><a href="show_requests.php">Requests</a></li>
                 <li><a href="Donor.php">Donor Details</a></li>
                 <li><a href="Show_Hospital.php">Hospitals</a></li>
-                <li><a href="inventory.php">Inventory</a></li>
+                <li><a href="inventory.php">Inventory Insert</a></li>
+                <li><a href="show_inventory.php">Inventory</a></li>
                
             </ul>
         </aside>
@@ -197,12 +175,19 @@ tr:hover {
 </html>
 <?php
 include('database/connection.php');
-// Handle form submission
 
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $bloodType = $_POST['bloodtype'];
     $quantity = $_POST['quantity'];
     $entryDate = $_POST['entryDate'];
 
+    // Validate input
+    if (empty($bloodType) || empty($quantity) || empty($entryDate)) {
+        die("Please fill in all fields.");
+    }
+
+    // Prepare and execute SQL query
     $sql = "INSERT INTO BloodInventory (BloodType, Quantity, EntryDate) VALUES (?, ?, ?)";
     $params = array($bloodType, $quantity, $entryDate);
     $sqlResult = sqlsrv_query($conn, $sql, $params);
@@ -212,7 +197,5 @@ include('database/connection.php');
     } else {
         echo "Blood inventory added successfully.";
     }
-
-
-
+}
 ?>

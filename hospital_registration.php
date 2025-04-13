@@ -20,31 +20,52 @@
     padding: 20px;
 }
 
-.container {
-    max-width: 600px;
-    margin: auto;
-    background: #8B0000; /* Dark red background */
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    color: #fff; /* White text for contrast */
-    margin-top: 4pc;
-}
+     h1 {
+            text-align: center;
+            color: #c0392b; /* Blood red color */
+            margin-top: 50px;
+        }
+form {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin:  auto;
+       
+            padding: 20px;
+        }
 
-h1 {
-    text-align: center;
-    color: #fff; /* White text for the heading */
-}
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
 
-label {
-    display: block;
-    margin: 10px 0 5px;
-    color: #f5f5dc; /* Cream color for labels */
-}
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
 
-input[type="text"],
-input[type="tel"],
-input[type="email"],
+        input[type="submit"] {
+            background-color: #c0392b; /* Blood red color */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #a93226; /* Darker red on hover */
+        }
 textarea {
     width: 100%;
     padding: 10px;
@@ -122,29 +143,28 @@ button[type="reset"]:hover {
 </head>
 <body>
 <div class="parent">
-        <aside class="sidebar">
-            <h2>Blood Management System</h2>
-            <ul>
-                <li><a href="admin.php">Dashboard</a></li>
-                <li><a href="register_donor.php">Register Donors</a></li>
-                <li><a href="hospital_registration.php">Register Hospital</a></li>
-                <li><a href="show_requests.php">Requests</a></li>
-                <li><a href="Donor.php">Donor Details</a></li>
-                <li><a href="Show_Hospital.php">Hospitals</a></li>
-                <li><a href="inventory.php">Inventory</a></li>
-               
-            </ul>
-        </aside>
+    <aside class="sidebar">
+        <h2>Blood Management System</h2>
+        <ul>
+            <li><a href="admin.php">Dashboard</a></li>
+            <li><a href="register_donor.php">Register Donors</a></li>
+            <li><a href="hospital_registration.php">Register Hospital</a></li>
+            <li><a href="show_requests.php">Requests</a></li>
+            <li><a href="Donor.php">Donor Details</a></li>
+            <li><a href="Show_Hospital.php">Hospitals</a></li>
+            <li><a href="inventory.php">Inventory Insert</a></li>
+            <li><a href="show_inventory.php">Inventory</a></li>
+        </ul>
+    </aside>
     <div class="container">
         <h1>Hospital Registration Form</h1>
-        <form action="" method="POST">
-
+        <form action="hospital_registration.php" method="POST">
             <label for="hospital_name">Hospital Name:</label>
             <input type="text" id="H_name" name="hospital_name" placeholder="Enter Hospital Name" required>
 
             <label for="contact_number">Contact Number:</label>
-            <input type="tel" id="H_contact" name="contact_number" placeholder="Enter Contact Number" required>
-
+            <input type="tel" id="H_contact" name="contact_number" placeholder="Enter Contact Number" required pattern="[0-9]{10}">
+        
             <label for="email">Email Address:</label>
             <input type="email" id="H_email" name="email" placeholder="Enter Email Address" required>
 
@@ -156,39 +176,44 @@ button[type="reset"]:hover {
 
             <button type="submit">Register Hospital</button>
             <button type="reset">Clear Form</button>
-         </form>
-       </div>
+        </form>
     </div>
+</div>
 </body>
 </html>
 
 <?php
-// Database connection parameters
 
 
-// Taking all values from the form data
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Taking all values from the form data
+    $H_name = $_POST['hospital_name'];
+    $H_contact = $_POST['contact_number'];
+    $H_email = $_POST['email'];
+    $H_address = $_POST['address'];
+    $H_con_person = $_POST['contact_person'];
 
-$H_name = $_POST['hospital_name'];
-$H_contact = $_POST['contact_number'];
-$H_email = $_POST['email'];
-$H_address = $_POST['address'];
-$H_con_person = $_POST['contact_person'];
+    // Prepare the SQL statement
+    $sql = "INSERT INTO tb_Hospital (H_name, H_contact, H_email, H_address, H_con_person) 
+            VALUES (?, ?, ?, ?, ?)";
 
-// Prepare the SQL statement
-$sql = "INSERT INTO tb_Hospital (H_name, H_contact, H_email, H_address, H_con_person) 
-        VALUES (?, ?, ?, ?, ?)";
+    // Prepare the statement
+    $params = array($H_name, $H_contact, $H_email, $H_address, $H_con_person);
+    $stmt = sqlsrv_prepare($conn, $sql, $params);
 
-// Prepare the statement
-$params = array($H_name, $H_contact, $H_email, $H_address, $H_con_person);
-$stmt = sqlsrv_prepare($conn, $sql, $params);
+    // Execute the statement
+    if ($stmt && sqlsrv_execute($stmt)) {
+        echo "Data stored in the database successfully.";
+        // Optionally, redirect to another page after successful registration
+        // header("Location: success_page.php");
+        // exit();
+    } else {
+        echo "Error in inserting data: " . print_r(sqlsrv_errors(), true);
+    }
 
-// Execute the statement
-if (sqlsrv_execute($stmt)) {
-    echo "Data stored in the database successfully.";
-} else {
-    echo "Error in inserting data: " . print_r(sqlsrv_errors(), true);
+    // Free the statement and close the connection
+    sqlsrv_free_stmt($stmt);
+    sqlsrv_close($conn);
 }
-
-// Close the connection
-
 ?>

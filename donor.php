@@ -124,6 +124,8 @@ sqlsrv_free_stmt($stmt);
 .button:hover {
     background-color: #A52A2A; /* Lighter red on hover */
 }
+und-color: #A52A2A; /* Lighter red on hover */
+}
     </style>
 </head>
 <body>
@@ -137,7 +139,8 @@ sqlsrv_free_stmt($stmt);
                 <li><a href="show_requests.php">Requests</a></li>
                 <li><a href="Donor.php">Donor Details</a></li>
                 <li><a href="Show_Hospital.php">Hospitals</a></li>
-                <li><a href="inventory.php">Inventory</a></li>
+                	<li><a href="inventory.php">Inventory Insert</a></li>
+                <li><a href="show_inventory.php">Inventory</a></li>
             </ul>
         </aside>
 

@@ -1,4 +1,5 @@
 <?php
+
 include('database/connection.php');
 $sql = "SELECT hospital_id, hospital_name, contact_number, email, address, contact_person FROM Hospitals";
 $stmt = sqlsrv_query($conn, $sql);
@@ -11,16 +12,23 @@ $stmt = sqlsrv_query($conn, $sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hospital Dashboard</title>
     <style>
-  .container {
+
+.container {
             width: 80%;
             margin: 50px auto;
             padding: 20px;
-            background: #3c3c3c; /* Slightly lighter background for the container */
+       
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            color:white;
+         
+            color:black;
         }
-table {
+
+        h1 {
+            text-align: center;
+            color: #a00000;
+        }
+
+        table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
@@ -37,13 +45,13 @@ th {
     color: #ffffff; /* White text for headers */
 }
 
-tr:nth-child(even) {
-    background-color: #4c4c4c; /* Darker background for even rows */
-}
+
 
 tr:hover {
     background-color: #5c5c5c; /* Slightly lighter on hover */
 }
+    
+   
 .button {
     background-color: #8B0000; /* Dark red color */
     color: white; /* Text color */
@@ -58,10 +66,63 @@ tr:hover {
 .button:hover {
     background-color: #A52A2A; /* Lighter red on hover */
 }
+
+.sidebar {
+    width: 250px;
+    height: 775px;
+    background-color:darkred;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    border-radius: 5px;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+    background-color: darkred;
+}
+.parent{
+            display: flex;
+            align-items: center;
+        }
     </style>
     <title>Registered Hospitals</title>
 </head>
 <body>
+<div class="parent">
+        <aside class="sidebar">
+            <h2>Blood Management System</h2>
+            <ul>
+                <li><a href="admin.php">Dashboard</a></li>
+                <li><a href="register_donor.php">Register Donors</a></li>
+                <li><a href="hospital_registration.php">Register Hospital</a></li>
+                <li><a href="show_requests.php">Requests</a></li>
+                <li><a href="Donor.php">Donor Details</a></li>
+                <li><a href="Show_Hospital.php">Hospitals</a></li>
+                <li><a href="inventory.php">Inventory Insert</a></li>
+                <li><a href="show_inventory.php">Inventory</a></li>
+               
+            </ul>
+        </aside>
     <div class="container">
         <h1>Registered Hospitals</h1>
         <table>
@@ -126,5 +187,6 @@ tr:hover {
 </tbody>
         </table>
     </div>
+</div>
 </body>
 </html>
