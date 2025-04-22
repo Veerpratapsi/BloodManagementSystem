@@ -15,7 +15,7 @@ include('database/connection.php');
         body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2; /* Light background for contrast */
-            display: flex;
+            display:flex;
             justify-content: center;
             align-items: center;
             height: 100vh; /* Full viewport height */
@@ -80,9 +80,6 @@ include('database/connection.php');
         
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required placeholder="Enter your password">
-        
-        <input type="checkbox" id="remember" name="remember">
-        <label for="remember">Remember Me</label>
         
         <input type="submit" value="Login">
     </form>

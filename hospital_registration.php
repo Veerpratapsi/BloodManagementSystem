@@ -168,6 +168,9 @@ button[type="reset"]:hover {
             <label for="email">Email Address:</label>
             <input type="email" id="H_email" name="email" placeholder="Enter Email Address" required>
 
+            <label for="password">Password:</label>
+            <input type="password" id="passwordl" name="password" placeholder="password" required>
+
             <label for="address">Address:</label>
             <textarea id="H_address" name="address" placeholder="Enter Hospital Address" required></textarea>
 
@@ -193,13 +196,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $H_email = $_POST['email'];
     $H_address = $_POST['address'];
     $H_con_person = $_POST['contact_person'];
+    $password = $_POST['password'];
 
     // Prepare the SQL statement
-    $sql = "INSERT INTO tb_Hospital (H_name, H_contact, H_email, H_address, H_con_person) 
-            VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO tb_Hospital (H_name, H_contact, H_email, H_address, H_con_person,password) 
+            VALUES (?, ?, ?, ?, ?,?)";
 
     // Prepare the statement
-    $params = array($H_name, $H_contact, $H_email, $H_address, $H_con_person);
+    $params = array($H_name, $H_contact, $H_email, $H_address, $H_con_person,$password);
     $stmt = sqlsrv_prepare($conn, $sql, $params);
 
     // Execute the statement

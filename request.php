@@ -1,6 +1,5 @@
 
 <?php 
-include('include/header.php');
 include('database/connection.php');
 
 // Check if the form is submitted

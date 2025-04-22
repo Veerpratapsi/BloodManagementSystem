@@ -124,8 +124,7 @@ sqlsrv_free_stmt($stmt);
 .button:hover {
     background-color: #A52A2A; /* Lighter red on hover */
 }
-und-color: #A52A2A; /* Lighter red on hover */
-}
+
     </style>
 </head>
 <body>
