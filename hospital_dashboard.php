@@ -129,8 +129,8 @@ header {
                     <button id="logout">Logout</button>
                 </div>
             </header>
+            </main>
     </div>
-</main>
 </body>
 <script>
     document.getElementById('logout').addEventListener('click', function() {

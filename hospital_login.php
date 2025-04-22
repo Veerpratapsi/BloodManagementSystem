@@ -46,19 +46,23 @@ input[type="password"] {
 }
 
 button {
-    width: 100%;
-    padding: 10px;
-    background-color: #5cb85c;
-    color: white;
+    background-color: #c72c2c; /* Lighter dark red for buttons */
+    color: #fff;
+    padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    margin-right: 10px; /* Space between buttons */
+}
+
+button[type="reset"] {
+    background-color: #f44336; /* Red for reset button */
 }
 
 button:hover {
-    background-color: #4cae4c;
+    opacity: 0.8;
 }
+
 
 .error-message {
     color: red;
