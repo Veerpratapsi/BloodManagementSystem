@@ -1,7 +1,7 @@
 <?php
 
 include('database/connection.php');
-$sql = "SELECT hospital_id, hospital_name, contact_number, email, address, contact_person FROM Hospitals";
+$sql = "SELECT hospital_id, hospital_name, contact_number, email, address, contact_person,password FROM Hospitals";
 $stmt = sqlsrv_query($conn, $sql);
 ?>
 
@@ -134,6 +134,7 @@ tr:hover {
                     <th>Email</th>
                     <th>Address</th>
                     <th>Contact Person</th>
+                    <th>Password</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </tr>
@@ -141,7 +142,7 @@ tr:hover {
             <tbody>
     <?php
     // SQL query to select data
-    $sql = "SELECT H_id, H_name, H_contact, H_email, H_address, H_con_person FROM tb_Hospital";
+    $sql = "SELECT H_id, H_name, H_contact, H_email, H_address, H_con_person,password FROM tb_Hospital";
     $stmt = sqlsrv_query($conn, $sql);
 
     // Check if the query was successful
@@ -160,6 +161,7 @@ tr:hover {
                 <td>" . htmlspecialchars($row['H_email']) . "</td>
                 <td>" . htmlspecialchars($row['H_address']) . "</td>
                 <td>" . htmlspecialchars($row['H_con_person']) . "</td>
+                       <td>" . htmlspecialchars($row['password']) . "</td>
                 <td>
                     <form action='update_hospital.php' method='post' style='display:inline;' >
                         <input type='hidden' name='H_id' value='" . htmlspecialchars($row['H_id']) . "'>

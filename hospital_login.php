@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Password is correct, set session variables
         $_SESSION['login_id'] = $row['id'];
         $_SESSION['email'] = $row['email'];
-        header("Location: hospital_dashboard.php"); // Redirect to admin dashboard
+        header("Location:request.php"); // Redirect to admin dashboard
         exit();
     } else {
         echo "Invalid username or password.";
